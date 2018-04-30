@@ -1,0 +1,23 @@
+I knew the Trie would need three methods:
+put - to add mappings
+get - to get mappings
+getPriorityPrefixSet - to do the hard work of predicting the possible words
+I eventually also decided to include a writeObject function because I thought just making the Trie implement  
+Serializable would be cheating.
+
+I decided to implement the searching for a node to be recursively downwards, but iteratively through siblings because I 
+thought it would be the quicker and easier and cleaner to code than an implementation that was purely recursive or
+purely itterative.
+
+I made seperate functions for searching for a node that to add a mapping and getting a value from an existing mapping so
+that calls to get with a key that isn't in the Trie wouldn't add any nodes to The trie.
+
+I decided to have a dummy root node because it made the bootstrapping of the buildTrie/getNode functions easier to 
+implement. I also realized after I finished coding that the root node could store a mapping with a key of the empty
+string.
+
+Values can be stored in non-leaf nodes because I thought that if each node was going to have a value field anyway I
+might as well take advantage of it.
+
+I decided to push the sorting of the predictions into the Trie because I knew the front end code that I was going to
+write woud be messy and I didn't want to make it any messier.

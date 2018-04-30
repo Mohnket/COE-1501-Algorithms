@@ -1,0 +1,12 @@
+The high level goal was to have a heap for every price & milleage request for every make and model.
+I did this because reheaping a single (or maybe two in order to differ Price & Milleage) heap would be nlog(n) on every retrieval which would not make the specifications.
+In order to prevent the add algorithm from scaling with the number of make & models a HashMap is included to map a comparison of make and models to the heap that implements that comparison. Therfore I have constant time lookup of a heap and then logarithmic addition to that heap.
+Update has a lower order scaling of make and models as we have to check every heap for if it contains that car, but if it does not contain the car due to it's own indiretion hashmap it will know it in constant time. A car will only ever appear in 4 heaps (2 for overall, 2 for the specific make and model). asymtoptic speed is then m + 4log(n) where m << n reduces to log(n).
+The same argument for update can be made for remove.
+Peek has constant time perofrmance as the least value is at the top of the heap, and looking the heap up is also constant.
+
+Note on hash functions:
+All hash functions for the hashmaps are done on strings (either on the car's vin or make & model). 
+I am not worried about the runtime overhead of the hash function because java caches the value of a string hash after running it once and because
+the JVM will occasionally pool Strings together so that even if the user enters what should be a "new" string through the console it may be mapped to an existing string in the pool.
+Combined I suspect that these two features of java will give me an average case close to constant time for hashing.

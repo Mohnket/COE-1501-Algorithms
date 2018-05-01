@@ -21,11 +21,11 @@ import java.util.Scanner;
 
 public class CarTracker
 {
-	private static HashMap<String, Car> vinMap = new HashMap<String, Car>();
-	
+    private static HashMap<String, Car> vinMap = new HashMap<String, Car>();
+    
     public static void main(String... args) throws Exception
     {
-		BufferedReader input = new BufferedReader(new FileReader(new File("cars.txt")));
+        BufferedReader input = new BufferedReader(new FileReader(new File("cars.txt")));
         input.readLine();
         
         MultiHeap<Car> multiHeap = new MultiHeap<Car>();
@@ -327,18 +327,18 @@ class MultiHeap<T>
     private HashMap<Integer, T> m_Items;                // Map Ids to Ts
     private HashMap<Comparator<T>, MinHeap> m_Heaps;    // Map Comparators to their heaps
 
-	private static int idGenerator = 1;
-	
-	MultiHeap()
-	{
-		m_Items = new HashMap<Integer, T>();
-		m_Heaps = new HashMap<Comparator<T>, MinHeap>();
-	}
-	
+    private static int idGenerator = 1;
+    
+    MultiHeap()
+    {
+        m_Items = new HashMap<Integer, T>();
+        m_Heaps = new HashMap<Comparator<T>, MinHeap>();
+    }
+    
     public void add(T item, Comparator<T> comparator)
     {
         int id = idGenerator++;
-		m_Items.put(id, item);
+        m_Items.put(id, item);
         
         MinHeap heap = m_Heaps.get(comparator);
         if(heap == null)
@@ -350,38 +350,38 @@ class MultiHeap<T>
         heap.add(id, item);
     }
     
-	public void update(T item)
-	{
-		for(MinHeap heap : m_Heaps.values())
-		{
-			heap.update(item);
-		}
-	}
-	
-	public void remove(T item)
-	{
-		for(MinHeap heap : m_Heaps.values())
-		{
-			int id = heap.remove(item);
+    public void update(T item)
+    {
+        for(MinHeap heap : m_Heaps.values())
+        {
+            heap.update(item);
+        }
+    }
+    
+    public void remove(T item)
+    {
+        for(MinHeap heap : m_Heaps.values())
+        {
+            int id = heap.remove(item);
             if(id != 0)
             {
                 m_Items.remove(id);
             }
-		}
-	}
-	
-	public T peek(Comparator<T> comparator)
-	{
-		T retval = null;
-		
+        }
+    }
+    
+    public T peek(Comparator<T> comparator)
+    {
+        T retval = null;
+        
         MinHeap heap = m_Heaps.get(comparator);
         if(heap != null)
         {
             retval = heap.peek();
         }
-		
-		return retval;
-	}
+        
+        return retval;
+    }
     
     public void print()
     {
@@ -406,28 +406,28 @@ class MultiHeap<T>
             m_IndirectionMap = new HashMap<T, Integer>();
             m_Heap = new ArrayList<Integer>();
         }
-		
-		public void add(Integer id, T item)
-		{
+        
+        public void add(Integer id, T item)
+        {
             m_IndirectionMap.put(item, m_Heap.size());
-			m_Heap.add(id);
+            m_Heap.add(id);
             reheapUp(m_Heap.size() - 1);
-		}
-		
-		public void update(T item)
-		{
-			Integer index = m_IndirectionMap.get(item);
+        }
+        
+        public void update(T item)
+        {
+            Integer index = m_IndirectionMap.get(item);
             if(index == null)
             {
                 return;
             }
             reheapDown(index);
             reheapUp(index);
-		}
-		
-		public int remove(T item)
-		{
-			Integer index = m_IndirectionMap.get(item);
+        }
+        
+        public int remove(T item)
+        {
+            Integer index = m_IndirectionMap.get(item);
             if(index == null)
             {
                 return 0;
@@ -440,12 +440,12 @@ class MultiHeap<T>
             m_IndirectionMap.remove(item);
             
             return id;
-		}
-		
-		public T peek()
-		{
-			return m_Items.get(m_Heap.get(0));
-		}
+        }
+        
+        public T peek()
+        {
+            return m_Items.get(m_Heap.get(0));
+        }
         
         private void reheapUp(int index)
         {
@@ -522,25 +522,25 @@ class MultiHeap<T>
     }
     
     // Used to dereference the ids held in MinHeap to compare the Cars they represent
-	class ComparatorWrapper implements Comparator<Integer>
-	{
-		private Comparator<T> m_UserComparator;
-		
-		ComparatorWrapper(Comparator<T> userComparator)
-		{
-			m_UserComparator = userComparator;
-		}
-		
-		public int compare(Integer o1, Integer o2)
-		{
-			return m_UserComparator.compare(m_Items.get(o1), m_Items.get(o2));
-		}
-		
-		public boolean equals(Object obj)
-		{
-			return m_UserComparator.equals(obj);
-		}
-	}
+    class ComparatorWrapper implements Comparator<Integer>
+    {
+        private Comparator<T> m_UserComparator;
+        
+        ComparatorWrapper(Comparator<T> userComparator)
+        {
+            m_UserComparator = userComparator;
+        }
+        
+        public int compare(Integer o1, Integer o2)
+        {
+            return m_UserComparator.compare(m_Items.get(o1), m_Items.get(o2));
+        }
+        
+        public boolean equals(Object obj)
+        {
+            return m_UserComparator.equals(obj);
+        }
+    }
 }
 
 class Car

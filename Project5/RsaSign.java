@@ -134,24 +134,24 @@ public class RsaSign
         byte[] retval = null;
         
         // lazily catch all exceptions...
-		try
+        try
         {
-			// read in the file to hash
-			Path path = Paths.get(fileName);
-			byte[] data = Files.readAllBytes(path);
+            // read in the file to hash
+            Path path = Paths.get(fileName);
+            byte[] data = Files.readAllBytes(path);
 
-			// create class instance to create SHA-256 hash
-			MessageDigest md = MessageDigest.getInstance("SHA-256");
+            // create class instance to create SHA-256 hash
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
 
-			// process the file
-			md.update(data);
-			// generate a has of the file
-			retval = md.digest();
-		} 
+            // process the file
+            md.update(data);
+            // generate a has of the file
+            retval = md.digest();
+        } 
         catch(Exception e)
         {
-			System.out.println(e.toString());
-		}
+            System.out.println(e.toString());
+        }
         
         return retval;
     }
